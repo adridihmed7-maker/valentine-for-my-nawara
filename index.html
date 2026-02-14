@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine | For My Special Someone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-pink: #ff4d8d;
+            --secondary-pink: #ff7eb3;
+            --light-pink: #ffe6f0;
+            --dark-red: #b30047;
+            --white: #ffffff;
+            --text-color: #333333;
+            --shadow: 0 5px 15px rgba(255, 77, 141, 0.2);
+            --lily-white: #fff9fd;
+            --lily-yellow: #fffacd;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-pink);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Lily flower container */
+        .lilies-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .lily {
+            position: absolute;
+            top: -50px;
+            font-size: 1.8rem;
+            color: var(--lily-white);
+            text-shadow: 0 0 5px rgba(255, 250, 205, 0.5);
+            opacity: 0.7;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            z-index: 1;
+        }
+        
+        .lily::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: var(--lily-yellow);
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        @keyframes fall {
+            0% {
+                top: -50px;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                top: 100vh;
+                transform: translateX(20px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Page container */
+        .page-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page {
+            display: none;
+            min-height: 85vh;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(3px);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .page-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .heart-icon {
+            color: var(--primary-pink);
+            margin: 0 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 77, 141, 0.3);
+            position: relative;
+            z-index: 3;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 77, 141, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-pink);
+        }
+        
+        .btn-small {
+            padding: 8px 20px;
+            font-size: 1rem;
+        }
+        
+        .choice-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        /* Music Player Styles */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 15px 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.5s ease;
+            transform: translateY(100px);
+            opacity: 0;
+            border: 2px solid var(--primary-pink);
+            max-width: 350px;
+        }
+        
+        .music-player.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .music-btn {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .music-btn:hover {
+            background-color: var(--dark-red);
+            transform: scale(1.1);
+        }
+        
+        .music-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .music-title {
+            font-weight: 600;
+            color: var(--primary-pink);
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .music-artist {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .music-close {
+            background: none;
+            border: none;
+            color: var(--primary-pink);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .music-close:hover {
+            color: var(--dark-red);
+            transform: scale(1.2);
+        }
+        
+        /* Page-specific styles */
+        /* Page 1: Welcome */
+        #page1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .welcome-heart {
+            font-size: 5rem;
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        /* Page 2: Love Letter with Photo */
+        .envelope {
+            background-color: var(--light-pink);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+        
+        .envelope:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .envelope-flap {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+            background-color: var(--secondary-pink);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+        }
+        
+        .letter-container {
+            display: none;
+            background-color: var(--white);
+            border-radius: 5px;
+            padding: 0;
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        .letter-container.show {
+            display: block;
+        }
+        
+        .letter-content {
+            padding: 40px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            line-height: 1.8;
+        }
+        
+        .signature-photo-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px;
+            gap: 40px;
+            align-items: flex-start;
+            background: linear-gradient(to bottom, var(--white), var(--light-pink));
+            border-top: 2px dashed var(--secondary-pink);
+        }
+        
+        .signature-section {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--light-pink) 0%, var(--white) 100%);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-section {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .signature-text {
+            font-family: 'Dancing Script', cursive;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .signature-line {
+            font-size: 2.2rem;
+            color: var(--primary-pink);
+            margin-bottom: 15px;
+            line-height: 1.3;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .signature-name {
+            font-size: 2.4rem;
+            color: var(--dark-red);
+            margin: 20px 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .letter-photo {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin: 0 auto;
+            overflow: hidden;
+            border: 3px solid var(--white);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .letter-photo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .letter-photo img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .letter-photo:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Elegant unified quote styling */
+        .photo-quote {
+            margin-top: 25px;
+            text-align: center;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .photo-quote-inner {
+            display: inline-block;
+            position: relative;
+        }
+        
+        .photo-quote-line {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--primary-pink);
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: block;
+            position: relative;
+        }
+        
+        .photo-quote-line:first-child::before {
+            content: '❝';
+            position: absolute;
+            top: -5px;
+            left: -25px;
+            font-size: 2.5rem;
+            color: var(--secondary-pink);
+            opacity: 0.8;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .photo-quote-line:last-child::after {
+            content: '❞';
+            position: absolute;
+            bottom: -10px;
+            right: -25px;
+            font-size: 2.5rem;
+            color: var(--secondary-pink);
+            opacity: 0.8;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Page 5: Final Message with Image */
+        .final-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .final-image-container {
+            margin: 50px auto;
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .final-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin: 0 auto;
+            border: 5px solid var(--white);
+            transition: all 0.5s ease;
+        }
+        
+        .final-image:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .final-image img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .final-caption {
+            margin-top: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--primary-pink);
+            font-style: italic;
+        }
+        
+        .signature-decoration {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 77, 141, 0.1);
+            z-index: 1;
+        }
+        
+        .signature-decoration.top-left {
+            top: 10px;
+            left: 15px;
+        }
+        
+        .signature-decoration.top-right {
+            top: 10px;
+            right: 15px;
+        }
+        
+        .signature-decoration.bottom-left {
+            bottom: 10px;
+            left: 15px;
+        }
+        
+        .signature-decoration.bottom-right {
+            bottom: 10px;
+            right: 15px;
+        }
+        
+        /* Page 3: Choice Page */
+        .choice-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .choice-message {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-pink);
+        }
+        
+        /* Page 4: Surprise Page */
+        .surprise-container {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .surprise-heart {
+            font-size: 8rem;
+            color: var(--primary-pink);
+            margin: 30px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--primary-pink);
+            font-size: 0.9rem;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Lily-themed decorative elements */
+        .lily-decoration {
+            position: absolute;
+            font-size: 2.5rem;
+            color: var(--lily-white);
+            opacity: 0.6;
+            z-index: 1;
+        }
+        
+        .page-corner-lily {
+            position: absolute;
+            font-size: 2rem;
+            color: var(--lily-white);
+            opacity: 0.5;
+        }
+        
+        .top-left-lily {
+            top: 20px;
+            left: 20px;
+        }
+        
+        .top-right-lily {
+            top: 20px;
+            right: 20px;
+            transform: rotate(45deg);
+        }
+        
+        .bottom-left-lily {
+            bottom: 20px;
+            left: 20px;
+            transform: rotate(-45deg);
+        }
+        
+        .bottom-right-lily {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(90deg);
+        }
+        
+        /* Animations */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 10px;
+            }
+            
+            .page {
+                padding: 20px;
+                margin: 10px 0;
+                min-height: 80vh;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .letter-content {
+                font-size: 1.5rem;
+                padding: 25px;
+            }
+            
+            .signature-photo-container {
+                padding: 20px;
+                gap: 30px;
+            }
+            
+            .signature-line {
+                font-size: 1.8rem;
+            }
+            
+            .signature-name {
+                font-size: 2rem;
+            }
+            
+            .letter-photo img {
+                height: 250px;
+            }
+            
+            .photo-quote-line {
+                font-size: 1.5rem;
+            }
+            
+            .photo-quote-line:first-child::before {
+                font-size: 2rem;
+                left: -20px;
+            }
+            
+            .photo-quote-line:last-child::after {
+                font-size: 2rem;
+                right: -20px;
+            }
+            
+            .final-message {
+                font-size: 2rem;
+            }
+            
+            .final-image {
+                max-width: 300px;
+            }
+            
+            .final-image img {
+                height: 250px;
+            }
+            
+            .final-caption {
+                font-size: 1.6rem;
+            }
+            
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+            
+            .choice-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .lily {
+                font-size: 1.2rem;
+            }
+            
+            .page-corner-lily {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Lily flowers falling in the background -->
+    <div class="lilies-container" id="lilies-container"></div>
+    
+    <!-- Music Player -->
+    <div id="music-player" class="music-player">
+        <div class="music-controls">
+            <button id="play-btn" class="music-btn">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+        <div class="music-info">
+            <div class="music-title">Dandelions</div>
+            <div class="music-artist">Ruth B.</div>
+        </div>
+        <button id="close-music" class="music-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <!-- Hidden Audio Element - IMPORTANT: Replace with your MP3 file -->
+    <audio id="background-music" loop preload="auto">
+        <!-- IMPORTANT: Replace "die-with-a-smile.mp3" with your actual MP3 file -->
+        <source src="Ruth B. - Dandelions.mp3" type="audio/mpeg">
+        <!-- If you have an online link, use this instead: -->
+        <!-- <source src="https://youtu.be/zgaCZOQCpp8?si=stECBIbVjHWzEn8E" type="audio/mpeg"> -->
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Page container -->
+    <div class="page-container">
+        <!-- Page 1: Welcome/Greeting -->
+        <div id="page1" class="page active">
+            <div class="page-corner-lily top-left-lily">🌸</div>
+            <div class="page-corner-lily top-right-lily">🌸</div>
+            <div class="page-corner-lily bottom-left-lily">🌸</div>
+            <div class="page-corner-lily bottom-right-lily">🌸</div>
+            
+            <div class="page-header">
+                <div class="welcome-heart">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h1 class="page-title">Happy Valentine's Day!</h1>
+                <p>To my dearest love nawaret lhoude lbouselmi,</p>
+            </div>
+            
+            <div style="text-align: center; max-width: 700px; margin: 0 auto; position: relative; z-index: 3;">
+                <p style="font-size: 1.3rem; margin-bottom: 30px;">
+                    Welcome to a special digital experience created just for you. 
+                    Every page holds a little surprise, a memory, or a message from my heart to yours.
+                </p>
+                <p style="font-size: 1.2rem; font-style: italic; color: var(--primary-pink);">
+                    "Love is not about how many days, months, or years you have been together. 
+                    It's about how much you love each other every single day."
+                </p>
+                <div style="margin-top: 30px; font-size: 3rem; color: var(--lily-white); opacity: 0.7;">
+                    🌸
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <div></div> <!-- Empty div for spacing -->
+                <button class="btn" onclick="showNextPage()">Begin Our Journey <i class="fas fa-arrow-right heart-icon"></i></button>
+            </div>
+        </div>
+        
+        <!-- Page 2: Love Letter with Photo -->
+        <div id="page2" class="page">
+            <div class="page-corner-lily top-left-lily">🌸</div>
+            <div class="page-corner-lily top-right-lily">🌸</div>
+            
+            <div class="page-header">
+                <h1 class="page-title">A Love Letter Just For You</h1>
+                <p>nhebek brcha nawarti</p>
+            </div>
+            
+            <div class="envelope" onclick="revealLetter()">
+                <div class="envelope-flap"></div>
+                <div style="text-align: center; padding: 40px; position: relative; z-index: 3;">
+                    <i class="fas fa-heart heart-icon" style="font-size: 3rem;"></i>
+                    <h2 style="color: var(--primary-pink); margin-top: 15px;">To My Beloved</h2>
+                    <p style="margin-top: 10px; color: var(--dark-red);">nawara</p>
+                    <div style="margin-top: 20px; font-size: 2rem; color: var(--lily-white);">🌸</div>
+                </div>
+                
+                <div id="letter-container" class="letter-container">
+                    <div class="letter-content">
+                        <p>My Dearest,</p>
+                        <p>i've been thinking about how to start this letter for a while. Because some feelings don't arrive loudly - they grow quietly, little by little, until one day you realize they're already a part of you.</p>
+                        
+                        <p>Maybe it was in the way you listened.</p>
+                        <p>Maybe it was in the way you smiled without trying.</p>
+                        <p>Or maybe it was simply how being with you made everything feel calmer, safer, warmer.</p>
+                        
+                        <p>You have this gentle way of turning ordinary moments into something special.</p>
+                        
+                        <p>Moments I didn't even know I would remember, but somehow, I do. Every single one of them.</p>
+                        <p>This Valentine's Day isn't about perfection or grand promises, it's about presence.</p>
+                        <p>About choosing someone and saying "Here, with you, this is where I want to be."</p>
+                        
+                        <p>And honestly, when I think about that choice, your name comes up every time. So this letter is me being brave in the quietest way possible - asking you to share a moment, a day, a memory, or a lifetime journey with me.</p>
+                        
+                        <p>Words can never truly capture what I feel for you, but I'll try my best...</p>
+                        <p>From the moment we met, you've brought endless joy into my life. Your smile lights up my world, your laughter is my favorite melody, and your love is the greatest gift I've ever received.</p>
+                        <p>Like a lily that blooms with gentle grace, your presence in my life has made everything more beautiful. Each petal of our relationship holds a cherished memory.</p>
+                        <p>Every day with you feels like a beautiful adventure. I'm grateful for every second we share.</p>
+                        <p>This Valentine's Day, I want to remind you how deeply you are loved, appreciated, and cherished. You are my everything.</p>
+                    </div>
+                    
+                    <!-- Combined signature and photo container -->
+                    <div class="signature-photo-container">
+                        <!-- Left side: Photo -->
+                        <div class="photo-section">
+                            <div class="letter-photo">
+                                <img src="image/im1.png" alt="Your Beautiful Smile">
+                            </div>
+                            <!-- Elegant unified quote styling -->
+                            <div class="photo-quote">
+                                <div class="photo-quote-inner">
+                                    <span class="photo-quote-line">If we're blessed with a daughter one day,</span>
+                                    <span class="photo-quote-line">I hope she has your smile, your grace, your heart.</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right side: Signature -->
+                        <div class="signature-section">
+                            <div class="signature-decoration top-left">🌸</div>
+                            <div class="signature-decoration top-right">🌸</div>
+                            <div class="signature-text">
+                                <div class="signature-line">Forever yours,</div>
+                                <div class="signature-name">Your Chocolat chaud</div>
+                                <div class="signature-line">love you nawarti !!</div>
+                            </div>
+                            <div style="margin-top: 30px; font-size: 2.5rem; color: var(--lily-white);">
+                                🌸 🌸 🌸
+                            </div>
+                            <div class="signature-decoration bottom-left">🌸</div>
+                            <div class="signature-decoration bottom-right">🌸</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showPreviousPage()"><i class="fas fa-arrow-left heart-icon"></i> Back</button>
+                <button class="btn" onclick="showNextPage()">Continue <i class="fas fa-arrow-right heart-icon"></i></button>
+            </div>
+        </div>
+        
+        <!-- Page 3: Choice Page -->
+        <div id="page3" class="page">
+            <div class="page-corner-lily top-left-lily">🌸</div>
+            <div class="page-corner-lily bottom-right-lily">🌸</div>
+            
+            <div class="page-header">
+                <h1 class="page-title">A Question for You</h1>
+                <p>This one requires your answer</p>
+            </div>
+            
+            <div class="choice-container">
+                <div class="choice-message">
+                    Will you be my Valentine, not just today, but every day?
+                </div>
+                
+                <div class="choice-buttons">
+                    <button class="btn" style="padding: 15px 40px; font-size: 1.3rem;" onclick="choiceMade('yes')">
+                        <i class="fas fa-heart heart-icon"></i> Yes, Absolutely!
+                    </button>
+                    
+                    <button class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.3rem;" id="no-button" onmouseover="moveNoButton()">
+                        <i class="far fa-heart heart-icon"></i> Maybe Later
+                    </button>
+                </div>
+                
+                <div id="choice-response" style="margin-top: 40px; font-size: 1.5rem; color: var(--primary-pink); display: none;">
+                    <!-- Response will appear here -->
+                </div>
+                
+                <div style="margin-top: 40px; font-size: 3rem; color: var(--lily-white); opacity: 0.7;">
+                    🌸
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showPreviousPage()"><i class="fas fa-arrow-left heart-icon"></i> Back</button>
+                <button class="btn" onclick="showNextPage()" id="continue-choice" style="display: none;">Continue <i class="fas fa-arrow-right heart-icon"></i></button>
+            </div>
+        </div>
+        
+        <!-- Page 4: Surprise Page -->
+        <div id="page4" class="page">
+            <div class="page-corner-lily top-right-lily">🌸</div>
+            <div class="page-corner-lily bottom-left-lily">🌸</div>
+            
+            <div class="page-header">
+                <h1 class="page-title">A Sweet Surprise!</h1>
+                <p>Just for you, my love</p>
+            </div>
+            
+            <div class="surprise-container">
+                <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto;">
+                    They say love is like a lily - delicate yet strong, beautiful yet resilient. 
+                    And you, my dear, have blossomed in my heart in ways I never imagined possible.
+                </p>
+                
+                <div class="surprise-heart">
+                    <i class="fas fa-heart"></i>
+                </div>
+                
+                <div style="background-color: var(--light-pink); padding: 30px; border-radius: 15px; max-width: 700px; margin: 0 auto;">
+                    <h2 style="color: var(--primary-pink); margin-bottom: 15px;">My Promise to You</h2>
+                    <p style="font-size: 1.2rem;">
+                        Like a lily that returns to bloom each year, my love for you is constant and everlasting.
+                        I promise to always cherish you, to support your dreams, to laugh with you in joy, 
+                        and hold you close in challenging times. I promise to love you more with each passing day.
+                    </p>
+                    <div style="margin-top: 20px; font-size: 2.5rem; color: var(--lily-white);">
+                        🌸 🌸 🌸
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showPreviousPage()"><i class="fas fa-arrow-left heart-icon"></i> Back</button>
+                <button class="btn" onclick="showNextPage()">Continue <i class="fas fa-arrow-right heart-icon"></i></button>
+            </div>
+        </div>
+        
+        <!-- Page 5: Final Message with Image -->
+        <div id="page5" class="page">
+            <div class="page-corner-lily top-left-lily">🌸</div>
+            <div class="page-corner-lily top-right-lily">🌸</div>
+            <div class="page-corner-lily bottom-left-lily">🌸</div>
+            <div class="page-corner-lily bottom-right-lily">🌸</div>
+            
+            <div class="page-header">
+                <h1 class="page-title">With All My Love</h1>
+                <p>Thank you for being you</p>
+            </div>
+            
+            <div class="final-message">
+                <p>My dearest,</p>
+                <p>As we reach the end of this digital love letter, I want you to know that my feelings for you are infinite.</p>
+                <p>You are the lily in my garden, the light in my days, and the dream I never want to wake up from.</p>
+                <p>No matter where life takes us, I will always choose you, today and every day.</p>
+                <p>Happy Valentine's Day, my love.</p>
+                <p style="margin-top: 40px; font-size: 3rem; color: var(--primary-pink);">
+                    <i class="fas fa-heart"></i>
+                </p>
+                <div style="margin-top: 30px; font-size: 4rem; color: var(--lily-white);">
+                    🌸 🌸 🌸
+                </div>
+            </div>
+            
+            <!-- Image section added to final page -->
+            <div class="final-image-container">
+                <div class="final-image">
+                    <img src="image/im2.png" alt="Our Beautiful Memory">
+                </div>
+                <div class="final-caption">
+                    Forever in my heart, forever in my soul
+                </div>
+                <div style="margin-top: 20px; font-size: 1.5rem; color: var(--dark-red); font-style: italic;">
+                    Our journey together is just beginning...
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showPreviousPage()"><i class="fas fa-arrow-left heart-icon"></i> Back</button>
+                <button class="btn" onclick="restartJourney()">Start Again <i class="fas fa-redo heart-icon"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Made with <i class="fas fa-heart" style="color: var(--primary-pink);"></i> and lilies for my special nawara lghalya</p>
+        <p style="margin-top: 5px; font-size: 0.8rem;">This Valentine's Day and always</p>
+    </div>
+
+    <script>
+        // Create falling lily flowers
+        function createLilies() {
+            const liliesContainer = document.getElementById('lilies-container');
+            const lilyCount = 20; // Number of lilies to create
+            
+            for (let i = 0; i < lilyCount; i++) {
+                const lily = document.createElement('div');
+                lily.classList.add('lily');
+                lily.innerHTML = '🌸';
+                
+                // Random position
+                const startPosition = Math.random() * 100;
+                lily.style.left = `${startPosition}vw`;
+                
+                // Random animation duration (5 to 15 seconds)
+                const duration = 5 + Math.random() * 10;
+                lily.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                lily.style.animationDelay = `${delay}s`;
+                
+                // Random size
+                const size = 1.2 + Math.random() * 0.8;
+                lily.style.fontSize = `${size}rem`;
+                
+                liliesContainer.appendChild(lily);
+            }
+        }
+        
+        // Page navigation - only one page shows at a time
+        const pages = [
+            document.getElementById('page1'),
+            document.getElementById('page2'),
+            document.getElementById('page3'),
+            document.getElementById('page4'),
+            document.getElementById('page5')
+        ];
+        
+        let currentPageIndex = 0;
+        
+        function showPage(pageIndex) {
+            // Hide all pages
+            pages.forEach((page, index) => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            pages[pageIndex].classList.add('active');
+            currentPageIndex = pageIndex;
+            
+            // Scroll to top of page
+            window.scrollTo(0, 0);
+        }
+        
+        function showNextPage() {
+            if (currentPageIndex < pages.length - 1) {
+                showPage(currentPageIndex + 1);
+            }
+        }
+        
+        function showPreviousPage() {
+            if (currentPageIndex > 0) {
+                showPage(currentPageIndex - 1);
+            }
+        }
+        
+        function restartJourney() {
+            showPage(0);
+        }
+        
+        // Music player functionality
+        const audioPlayer = document.getElementById('background-music');
+        const musicPlayer = document.getElementById('music-player');
+        const playBtn = document.getElementById('play-btn');
+        const closeMusicBtn = document.getElementById('close-music');
+        let isPlaying = false;
+        
+        // Initialize audio player with proper settings
+        audioPlayer.volume = 0.5;
+        audioPlayer.preload = 'auto';
+        
+        // Show music player and start playing when letter is opened
+        function startMusic() {
+            musicPlayer.classList.add('show');
+            
+            // Set volume
+            audioPlayer.volume = 0.5;
+            
+            // Try to play the music
+            const playPromise = audioPlayer.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Music started successfully
+                    isPlaying = true;
+                    updatePlayButton();
+                    console.log("Music started successfully!");
+                }).catch(error => {
+                    // Autoplay was prevented
+                    console.log("Autoplay prevented. User needs to click play button.");
+                    console.log("Error details:", error);
+                    
+                    // Show play button prominently
+                    playBtn.innerHTML = '<i class="fas fa-play"></i> Play Music';
+                    playBtn.style.width = 'auto';
+                    playBtn.style.padding = '10px 20px';
+                    
+                    // Add a tooltip or instruction
+                    const musicInfo = document.querySelector('.music-info');
+                    if (musicInfo) {
+                        const instruction = document.createElement('div');
+                        instruction.style.fontSize = '0.7rem';
+                        instruction.style.color = 'var(--dark-red)';
+                        instruction.style.marginTop = '5px';
+                        instruction.textContent = 'Click play to start music';
+                        musicInfo.appendChild(instruction);
+                    }
+                });
+            }
+        }
+        
+        // Update play button icon
+        function updatePlayButton() {
+            if (isPlaying) {
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.style.width = '40px';
+                playBtn.style.padding = '';
+            } else {
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.style.width = '40px';
+                playBtn.style.padding = '';
+            }
+        }
+        
+        // Toggle play/pause
+        playBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+            } else {
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                }).catch(error => {
+                    console.log("Play failed:", error);
+                });
+            }
+            updatePlayButton();
+        });
+        
+        // Close music player
+        closeMusicBtn.addEventListener('click', function() {
+            musicPlayer.classList.remove('show');
+            audioPlayer.pause();
+            isPlaying = false;
+            updatePlayButton();
+        });
+        
+        // Love letter reveal with photo and music
+        function revealLetter() {
+            const letterContainer = document.getElementById('letter-container');
+            letterContainer.classList.add('show');
+            
+            // Change envelope appearance after opening
+            const envelope = document.querySelector('.envelope');
+            envelope.style.backgroundColor = '#fff5f9';
+            envelope.style.padding = '0';
+            envelope.style.cursor = 'default';
+            
+            // Remove the click event after first click
+            envelope.onclick = null;
+            
+            // Start playing music
+            startMusic();
+        }
+        
+        // Choice page interaction
+        function choiceMade(choice) {
+            const response = document.getElementById('choice-response');
+            const continueBtn = document.getElementById('continue-choice');
+            const noButton = document.getElementById('no-button');
+            
+            if (choice === 'yes') {
+                response.innerHTML = '<p><i class="fas fa-heart heart-icon"></i> You\'ve made me the happiest man in the world! I love you!</p>';
+                response.style.display = 'block';
+                continueBtn.style.display = 'inline-block';
+                
+                // Make the "Maybe Later" button disappear
+                noButton.style.display = 'none';
+            }
+        }
+        
+        // Fun interaction for the "no" button
+        function moveNoButton() {
+            const button = document.getElementById('no-button');
+            const container = document.querySelector('.choice-container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+            
+            // Calculate random position within container
+            const maxX = containerRect.width - buttonRect.width - 20;
+            const maxY = containerRect.height - buttonRect.height - 20;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            button.style.position = 'relative';
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+            
+            // Change text temporarily
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-heart-broken heart-icon"></i> Are you sure?';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+            }, 1000);
+        }
+        
+        // Initialize - only show first page
+        document.addEventListener('DOMContentLoaded', function() {
+            createLilies();
+            showPage(0); // Only show first page
+            
+            // Add some interactive lily effects
+            document.addEventListener('click', function(e) {
+                // Create a lily effect when clicking on romantic elements
+                if (e.target.closest('.btn') || e.target.closest('.envelope') || e.target.closest('.welcome-heart')) {
+                    const lily = document.createElement('div');
+                    lily.innerHTML = '🌸';
+                    lily.style.position = 'fixed';
+                    lily.style.fontSize = '1.5rem';
+                    lily.style.color = 'var(--lily-white)';
+                    lily.style.pointerEvents = 'none';
+                    lily.style.zIndex = '1000';
+                    lily.style.animation = 'fadeIn 0.5s ease-out forwards';
+                    
+                    // Position at click
+                    lily.style.left = `${e.clientX - 15}px`;
+                    lily.style.top = `${e.clientY - 15}px`;
+                    
+                    document.body.appendChild(lily);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        lily.remove();
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
